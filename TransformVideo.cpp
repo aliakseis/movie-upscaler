@@ -175,6 +175,12 @@ int TransformVideo(const char *in_filename,
 
     if (output_format_context->oformat->flags & AVFMT_GLOBALHEADER)
         enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+    // https://stackoverflow.com/questions/37347373/losing-quality-when-encoding-with-ffmpeg
+    enc_ctx->qmax /= 4;
+    if (enc_ctx->qmin > enc_ctx->qmax)
+        enc_ctx->qmin = enc_ctx->qmax;
+
     /* Third parameter can be used to pass settings to encoder */
     ret = avcodec_open2(enc_ctx, encoder, NULL);
     if (ret < 0) {
