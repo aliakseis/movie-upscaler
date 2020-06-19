@@ -246,7 +246,7 @@ int TransformVideo(const char *in_filename,
                 avEncodedPacket.size = 0;
 
 
-                cv::Mat img(videoFrame->height, videoFrame->width, CV_8UC3);// , pFrameRGB->data[0]); //dst->data[0]);
+                cv::Mat img(videoFrame->height, videoFrame->width, CV_8UC2);// , pFrameRGB->data[0]); //dst->data[0]);
 
                 int stride = img.step[0];
 
@@ -258,7 +258,7 @@ int TransformVideo(const char *in_filename,
                     videoCodecContext->pix_fmt,
                     videoCodecContext->width,
                     videoCodecContext->height,
-                    AV_PIX_FMT_BGR24,
+                    AV_PIX_FMT_YUYV422,
                     SWS_FAST_BILINEAR, NULL, NULL, NULL);
 
                 sws_scale(img_convert_ctx, videoFrame->data, videoFrame->linesize, 0, videoCodecContext->height, //pFrameRGB->data, pFrameRGB->linesize);
@@ -275,7 +275,7 @@ int TransformVideo(const char *in_filename,
                     NULL,
                     videoCodecContext->width * upscale,
                     videoCodecContext->height * upscale,
-                    AV_PIX_FMT_BGR24,
+                    AV_PIX_FMT_YUYV422,
                     videoCodecContext->width * upscale,
                     videoCodecContext->height * upscale,
                     videoCodecContext->pix_fmt,
